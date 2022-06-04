@@ -65,9 +65,9 @@ const Clock = () => {
   }, [sessionMinutes]);
 
   useEffect(() => {
-    let interval = null;
     if (playing) {
-      interval = setInterval(() => {
+      console.log("timer started");
+      const timeout = setTimeout(() => {
         if (isBreak && minutes === 0 && seconds === 0) {
           setIsBreak(false);
           setMinutes(sessionMinutes);
@@ -85,10 +85,8 @@ const Clock = () => {
           }
         }
       }, 1000);
-    } else {
-      clearInterval(interval);
+      return () => clearTimeout(timeout);
     }
-    return () => clearInterval(interval);
   }, [playing, seconds, minutes, isBreak, breakMinutes, sessionMinutes]);
 
   return (
